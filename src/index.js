@@ -21,7 +21,13 @@ function solveMaze (bufferMaze) {
 readDir(process.argv[2] || MAZES_DIR)
   .then(files => {
     files.forEach(async file => {
-      const bufferMaze = await readFile(`${MAZES_DIR}/${file}`)
+      let bufferMaze
+      try {
+        bufferMaze = await readFile(`${MAZES_DIR}/${file}`)
+      } catch (error) {
+        console.log(error.message)
+        return
+      }
       solveMaze(bufferMaze)
       console.log('------------------------------------------------------------------')
     })
